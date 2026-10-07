@@ -1,0 +1,8 @@
+work/
+src/output/
+output/
+data/raw/*.parquet
+data/raw/wsc_snapshot_2024/
+__pycache__/
+.DS_Store
+*.zip
