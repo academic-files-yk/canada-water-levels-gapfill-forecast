@@ -184,9 +184,9 @@ def fig4():
     ax.set_xlabel("Median test RMSE (m, log scale)")
     ax.grid(axis="x")
     title(ax, "b", "Effect of evaluation protocol")
-    ax.legend(handles=[Line2D([], [], marker="o", ls="", ms=4.5, color=INK2, label="this study"),
+    ax.legend(handles=[Line2D([], [], marker="o", ls="", ms=4.5, color=INK2, label="common protocol"),
                        Line2D([], [], marker="o", ls="", ms=4.5, markerfacecolor="white", markeredgecolor=INK2,
-                              label="protocol of earlier versions")],
+                              label="alternative set-up")],
               loc="center right", bbox_to_anchor=(1.0, 0.56), handletextpad=0.3, borderaxespad=0.2)
     save(fig, "Fig4_forecast_skill")
 

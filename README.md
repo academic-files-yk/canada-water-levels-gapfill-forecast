@@ -12,7 +12,7 @@ The workflow starts from the daily water level archive of the Water Survey of Ca
 |---|---|
 | `src/` | Analysis scripts (Python 3.13), numbered in the order in which they are run |
 | `results/` | Station-level results used in the manuscript |
-| `figures/` | Figures 3–8 of the manuscript (PNG) |
+| `figures/` | Figures 1–8 of the manuscript (PNG) |
 | `data/raw/` | Location of the raw archive snapshot (download from the release, see below) |
 | `requirements.txt` | Pinned library versions |
 
@@ -31,6 +31,7 @@ The workflow starts from the daily water level archive of the Water Survey of Ca
 | `10_trend_tests.py` | Mann–Kendall tests, Sen's slope, Benjamini–Hochberg and Hamed–Rao corrections | `trend_tests_stations.csv`, `trend_tests_basins.csv` |
 | `11_hyperparameter_sensitivity.py` | Random-search tuning at a stratified subset of 154 stations | `hyperparameter_runs.csv` |
 | `12_figures.py` | Figures 3–8 | `figures/` |
+| `13_study_area_figures.py` | Figures 1–2: study area map and observation record of every station (`--download` fetches the map layers) | `figures/`, `observation_periods.csv` |
 
 ## Data
 
@@ -40,6 +41,8 @@ Large files are attached to the GitHub release `v1.0-r4` rather than stored in t
 |---|---|
 | `wsc_snapshot_2024_part1…part4_*.parquet` | Snapshot of the Water Survey of Canada daily water level archive as downloaded in 2024 (all 3,645 stations, original fields), in four files; place all four in `data/raw/wsc_snapshot_2024/` |
 | `processed_series_basin_XX*.zip` (15 files) | Screened daily series of the 3,564 analysed stations after gap filling, with flags for filled days and segment identifiers; one or more files per drainage basin. Unzip all into `work/series/` to skip step 01 |
+
+Map layers for Fig. 1 are downloaded by `13_study_area_figures.py --download` into `work/gis/`: the major drainage areas of Canada (Atlas of Canada, Natural Resources Canada, Open Government Licence – Canada) and country, province and lake outlines from Natural Earth (public domain).
 
 The raw data are published by the Water Survey of Canada (Environment and Climate Change Canada) under the Open Government Licence – Canada and are redistributed here unchanged with attribution. Current versions are available from the Water Survey of Canada (https://wateroffice.ec.gc.ca/).
 
@@ -64,6 +67,7 @@ python 09_forecast_statistics.py
 python 08_data_flow_table.py
 python 11_hyperparameter_sensitivity.py --workers 12
 python 12_figures.py
+python 13_study_area_figures.py --download
 ```
 
 Intermediate files are written to `work/`, tables to `src/output/` and figures to `figures/`. All random seeds are fixed. The two forecasting runs together take about three hours on a 14-core laptop, and the hyperparameter analysis about one hour. On macOS, XGBoost and LightGBM need an OpenMP runtime (`libomp`).
